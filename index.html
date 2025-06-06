@@ -10,12 +10,7 @@
       scroll-behavior: smooth;
     }
     section {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding-top: 5rem;
-      padding-bottom: 5rem;
+      scroll-margin-top: 4rem;
     }
   </style>
 </head>
@@ -35,7 +30,7 @@
   </header>
 
   <!-- Sekcja: O nas -->
-  <section id="o-nas" class="px-4">
+  <section id="o-nas" class="min-h-screen flex items-center justify-center px-4 pt-20">
     <div class="max-w-2xl text-center">
       <h1 class="text-4xl font-bold mb-4">Księgowość Tomasz Raniszewski</h1>
       <p class="text-lg">Zdalne biuro rachunkowe dla jednoosobowych działalności. Prosto, przejrzyście, bez wychodzenia z domu.</p>
@@ -43,24 +38,23 @@
   </section>
 
   <!-- Sekcja: Usługi -->
-  <section id="uslugi" class="bg-gray-50 px-4">
+  <section id="uslugi" class="min-h-screen flex items-center justify-center px-4 pt-20 bg-gray-50">
     <div class="max-w-2xl text-center">
       <h2 class="text-3xl font-semibold mb-4">Nasze Usługi</h2>
-      <ul class="text-lg space-y-2 text-left">
+      <ul class="text-lg space-y-2">
         <li>✔️ Kompleksowa obsługa księgowa mikrofirm (KPiR, ryczałt)</li>
-        <li>✔️ Rozliczenia ZUS, JPK_V7</li>
+        <li>✔️ Rozliczenia ZUS i JPK_V7</li>
         <li>✔️ Obsługa dokumentów z KSeF i integracja z wfirma.pl</li>
         <li>✔️ Automatyzacja procesów księgowych i poboru danych</li>
         <li>✔️ Kontakt i konsultacje: e-mail, telefon</li>
-        <li>✔️ Nowoczesny panel klienta do wystawiania faktur</li>
-        <li>✔️ Zdalne wsparcie we wdrażaniu rozwiązań księgowych i organizacyjnych</li>
+        <li>✔️ Pomoc zdalna przy wdrażaniu nowych rozwiązań dla firm</li>
         <li>✔️ Bezpieczny dostęp online do dokumentów i zestawień</li>
       </ul>
     </div>
   </section>
 
   <!-- Sekcja: Cennik -->
-  <section id="cennik" class="px-4">
+  <section id="cennik" class="min-h-screen flex items-center justify-center px-4 pt-20">
     <div class="max-w-xl w-full text-center">
       <h2 class="text-3xl font-semibold mb-6">Cennik</h2>
 
@@ -68,21 +62,21 @@
         <label for="dokumenty" class="block font-medium mb-1">📄 Ile dokumentów miesięcznie?</label>
         <input type="range" id="dokumenty" min="1" max="100" value="10"
                class="w-full accent-green-600" oninput="updateSummary()" />
-        <div class="text-sm mt-1">Liczba dokumentów: <span id="docCount">10</span> (pierwsze 10 w cenie podstawowej)</div>
+        <div class="text-sm mt-1">Liczba dokumentów: <span id="docCount">10</span></div>
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
         <div class="flex items-center justify-between">
           <span class="font-medium">🧾 VAT</span>
           <button onclick="toggleOption('vat')" id="vatBtn"
-                  class="px-4 py-2 rounded-full bg-gray-300 text-white transition-colors">
+                  class="ml-4 px-4 py-2 rounded-full bg-gray-300 text-white transition-colors">
             NIE
           </button>
         </div>
         <div class="flex items-center justify-between">
           <span class="font-medium">👥 ZUS</span>
           <button onclick="toggleOption('zus')" id="zusBtn"
-                  class="px-4 py-2 rounded-full bg-gray-300 text-white transition-colors">
+                  class="ml-4 px-4 py-2 rounded-full bg-gray-300 text-white transition-colors">
             NIE
           </button>
         </div>
@@ -91,24 +85,18 @@
       <div class="text-xl font-semibold">
         📊 Szacowana opłata miesięczna: <span id="summary">0 zł</span>
       </div>
-
-      <p class="mt-6 text-lg">Skontaktuj się, by otrzymać dokładną wycenę dopasowaną do Twojej działalności.</p>
-      <a href="#kontakt" class="inline-block mt-4 px-6 py-2 bg-green-700 text-white rounded hover:bg-green-800 transition">
-        Przejdź do kontaktu
-      </a>
     </div>
   </section>
 
   <!-- Sekcja: Kontakt -->
-  <section id="kontakt" class="bg-gray-50 px-4">
+  <section id="kontakt" class="min-h-screen flex items-center justify-center px-4 pt-20 bg-gray-50">
     <div class="max-w-xl text-center space-y-4">
       <h2 class="text-3xl font-semibold">Kontakt</h2>
-      <p class="text-lg">Masz pytania? Napisz do mnie:</p>
+      <p class="text-lg">Masz pytania? Napisz lub zadzwoń:</p>
       <div class="text-md">
         📧 <a href="mailto:ksiegowosc.tomasz.raniszewski@gmail.com"
               class="text-green-700 underline">ksiegowosc.tomasz.raniszewski@gmail.com</a><br />
         ☎️ <a href="tel:+48512261217" class="text-green-700">+48 512 261 217</a><br />
-        📍 ul. Żyzna 45/26, 09-409 Płock<br />
         NIP: 7742953874 &nbsp; REGON: 540346915
       </div>
     </div>
@@ -140,8 +128,8 @@
       const count = parseInt(document.getElementById('dokumenty').value);
       document.getElementById('docCount').textContent = count;
 
-      let price = 50;
-      if (count > 10) price += (count - 10) * 2;
+      let price = 50 + (count - 10) * 3;
+      if (count <= 10) price = 50;
       if (vat) price += 20;
       if (zus) price += 20;
 
