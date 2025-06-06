@@ -127,9 +127,9 @@
       const count = parseInt(document.getElementById('dokumenty').value);
       document.getElementById('docCount').textContent = count;
 
-      let price = 50 + Math.max(0, (count - 10) * 1);
-      if (vat) price += 25;
-      if (zus) price += 10;
+      let price = 50 + Math.max(0, (count - 10) * 2);
+      if (vat) price += 20;
+      if (zus) price += 20;
 
       document.getElementById('summary').textContent = price + ' zł';
     }
