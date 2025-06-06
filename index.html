@@ -129,10 +129,10 @@
       const count = parseInt(document.getElementById('dokumenty').value);
       document.getElementById('docCount').textContent = count;
 
-      let price = 100 + (count - 10) * 3;
-      if (count <= 10) price = 100;
-      if (vat) price += 30;
-      if (zus) price += 20;
+      let price = 70; // startowa stawka
+      if (count > 10) price += (count - 10) * 2;
+      if (vat) price += 20;
+      if (zus) price += 15;
 
       document.getElementById('summary').textContent = price + ' zł';
     }
