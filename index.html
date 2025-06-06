@@ -9,134 +9,137 @@
     html {
       scroll-behavior: smooth;
     }
+    section {
+      scroll-margin-top: 4rem; /* zapobiega zakrywaniu przez navbar */
+    }
   </style>
 </head>
-<body class="bg-white text-gray-800 font-sans">
-  <!-- MENU -->
-  <header class="fixed top-0 left-0 w-full bg-white shadow z-50">
-    <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
-      <div class="font-bold text-xl">KTR</div>
-      <ul class="flex space-x-4">
-        <li><a href="#start" class="hover:text-green-600">Start</a></li>
-        <li><a href="#uslugi" class="hover:text-green-600">Usługi</a></li>
-        <li><a href="#cennik" class="hover:text-green-600">Cennik</a></li>
-        <li><a href="#kontakt" class="hover:text-green-600">Kontakt</a></li>
-      </ul>
+<body class="bg-white text-gray-800">
+
+  <!-- Nawigacja -->
+  <header class="fixed top-0 w-full bg-white shadow-md z-50">
+    <nav class="max-w-5xl mx-auto px-4 py-3 flex justify-between items-center">
+      <div class="font-bold text-lg text-green-700">Księgowość</div>
+      <div class="space-x-4">
+        <a href="#o-nas" class="text-gray-700 hover:text-green-600">O nas</a>
+        <a href="#uslugi" class="text-gray-700 hover:text-green-600">Usługi</a>
+        <a href="#cennik" class="text-gray-700 hover:text-green-600">Cennik</a>
+        <a href="#kontakt" class="text-gray-700 hover:text-green-600">Kontakt</a>
+      </div>
     </nav>
   </header>
 
-  <!-- START -->
-  <section id="start" class="min-h-screen flex items-center justify-center bg-gray-100 pt-24">
-    <div class="text-center">
-      <h1 class="text-4xl md:text-5xl font-bold mb-4">Księgowość zdalnie i bezproblemowo</h1>
-      <p class="text-lg md:text-xl">Dla jednoosobowych firm — sprawnie, prosto i zdalnie</p>
+  <!-- Sekcja: O nas -->
+  <section id="o-nas" class="min-h-screen flex items-center justify-center px-4 pt-20">
+    <div class="max-w-2xl text-center">
+      <h1 class="text-4xl font-bold mb-4">Księgowość Tomasz Raniszewski</h1>
+      <p class="text-lg">Zdalne biuro rachunkowe dla jednoosobowych działalności. Prosto, przejrzyście, bez wychodzenia z domu.</p>
     </div>
   </section>
 
-  <!-- USŁUGI -->
-  <section id="uslugi" class="py-20 bg-white">
-    <div class="container mx-auto px-4 text-center">
-      <h2 class="text-3xl font-bold mb-8">Zakres usług</h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div class="shadow p-6 rounded-2xl border">
-          <h3 class="text-xl font-semibold mb-2">Księgowość dla JDG</h3>
-          <p>Pełna obsługa księgowa dla firm bez pracowników</p>
+  <!-- Sekcja: Usługi -->
+  <section id="uslugi" class="min-h-screen flex items-center justify-center px-4 pt-20 bg-gray-50">
+    <div class="max-w-2xl text-center">
+      <h2 class="text-3xl font-semibold mb-4">Nasze Usługi</h2>
+      <ul class="text-lg space-y-2">
+        <li>✔️ Księgowość uproszczona (KPiR)</li>
+        <li>✔️ Ryczałt od przychodów ewidencjonowanych</li>
+        <li>✔️ Rozliczenia miesięczne z ZUS i US</li>
+        <li>✔️ Pobieranie faktur z KSeF i wfirma.pl</li>
+        <li>✔️ Kontakt online: e-mail / telefon / wideorozmowa</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Sekcja: Cennik -->
+  <section id="cennik" class="min-h-screen flex items-center justify-center px-4 pt-20">
+    <div class="max-w-xl w-full text-center">
+      <h2 class="text-3xl font-semibold mb-6">Cennik</h2>
+
+      <!-- Liczba dokumentów -->
+      <div class="mb-4 text-left">
+        <label for="dokumenty" class="block font-medium mb-1">📄 Ile dokumentów miesięcznie?</label>
+        <input type="range" id="dokumenty" min="1" max="100" value="10"
+               class="w-full accent-green-600" oninput="updateSummary()" />
+        <div class="text-sm mt-1">Liczba dokumentów: <span id="docCount">10</span></div>
+      </div>
+
+      <!-- VAT i ZUS -->
+      <div class="flex flex-col sm:flex-row justify-between gap-4 mb-6">
+        <div class="flex items-center justify-between w-full">
+          <span class="font-medium">🧾 VAT</span>
+          <button onclick="toggleOption('vat')" id="vatBtn"
+                  class="px-4 py-2 rounded-full bg-gray-300 text-white transition-colors">
+            NIE
+          </button>
         </div>
-        <div class="shadow p-6 rounded-2xl border">
-          <h3 class="text-xl font-semibold mb-2">Automatyzacja przez wfirma</h3>
-          <p>Wystawianie faktur, integracja z KSeF, e-archiwizacja</p>
+        <div class="flex items-center justify-between w-full">
+          <span class="font-medium">👥 ZUS</span>
+          <button onclick="toggleOption('zus')" id="zusBtn"
+                  class="px-4 py-2 rounded-full bg-gray-300 text-white transition-colors">
+            NIE
+          </button>
         </div>
-        <div class="shadow p-6 rounded-2xl border">
-          <h3 class="text-xl font-semibold mb-2">Wsparcie e-mail i telefoniczne</h3>
-          <p>Zawsze jesteśmy pod ręką, nawet zdalnie</p>
-        </div>
+      </div>
+
+      <!-- Wyliczenie -->
+      <div class="text-xl font-semibold">
+        📊 Szacowana opłata miesięczna: <span id="summary">0 zł</span>
       </div>
     </div>
   </section>
 
-  <!-- CENNIK -->
-  <section id="cennik" class="py-20 bg-gray-100">
-    <div class="container mx-auto px-4 text-center">
-      <h2 class="text-3xl font-bold mb-8">Cennik</h2>
-
-      <div class="max-w-xl mx-auto text-left space-y-6">
-        <!-- Ilość dokumentów -->
-        <div>
-          <label class="block mb-2 font-semibold">Liczba dokumentów miesięcznie: <span id="docCountLabel">10</span></label>
-          <input id="docCount" type="range" min="1" max="100" value="10" class="w-full" />
-        </div>
-
-        <!-- VAT toggle -->
-        <div class="flex items-center justify-between">
-          <span class="font-semibold">Czy jesteś VAT-owcem?</span>
-          <button id="vatToggle" class="px-4 py-2 rounded-full text-white bg-gray-400">NIE</button>
-        </div>
-
-        <!-- ZUS toggle -->
-        <div class="flex items-center justify-between">
-          <span class="font-semibold">Czy rozliczamy ZUS?</span>
-          <button id="zusToggle" class="px-4 py-2 rounded-full text-white bg-gray-400">NIE</button>
-        </div>
-
-        <!-- Opłata -->
-        <div class="mt-6 text-lg font-semibold">
-          Szacowana opłata miesięczna: <span id="price">100</span> zł
-        </div>
+  <!-- Sekcja: Kontakt -->
+  <section id="kontakt" class="min-h-screen flex items-center justify-center px-4 pt-20 bg-gray-50">
+    <div class="max-w-xl text-center space-y-4">
+      <h2 class="text-3xl font-semibold">Kontakt</h2>
+      <p class="text-lg">Masz pytania? Napisz do mnie:</p>
+      <div class="text-md">
+        📧 <a href="mailto:ksiegowosc.tomasz.raniszewski@gmail.com"
+              class="text-green-700 underline">ksiegowosc.tomasz.raniszewski@gmail.com</a><br />
+        ☎️ <a href="tel:+48512261217" class="text-green-700">+48 512 261 217</a><br />
+        📍 ul. Żyzna 45/26, 09-409 Płock<br />
+        NIP: 7742953874 &nbsp; REGON: 540346915
       </div>
     </div>
   </section>
 
-  <!-- KONTAKT -->
-  <section id="kontakt" class="py-20 bg-white">
-    <div class="container mx-auto px-4 text-center">
-      <h2 class="text-3xl font-bold mb-8">Kontakt</h2>
-      <p>Tomasz Raniszewski</p>
-      <p>NIP: 7742953874</p>
-      <p>REGON: 540346915</p>
-      <p class="mt-2">Email: <a href="mailto:ksiegowosc.tomasz.raniszewski@gmail.com" class="text-green-600 hover:underline">ksiegowosc.tomasz.raniszewski@gmail.com</a></p>
-      <p>Tel: 512-261-217</p>
-    </div>
-  </section>
-
+  <!-- Skrypt do cennika -->
   <script>
-    const docCount = document.getElementById('docCount');
-    const docCountLabel = document.getElementById('docCountLabel');
-    const vatToggle = document.getElementById('vatToggle');
-    const zusToggle = document.getElementById('zusToggle');
-    const price = document.getElementById('price');
+    let vat = false;
+    let zus = false;
 
-    let isVAT = false;
-    let isZUS = false;
-
-    function calculatePrice() {
-      const docs = parseInt(docCount.value);
-      let base = 100 + (docs - 10) * 2;
-      if (docs <= 10) base = 100;
-      if (isVAT) base += 50;
-      if (isZUS) base += 30;
-      price.innerText = base;
+    function toggleOption(option) {
+      if (option === 'vat') {
+        vat = !vat;
+        const btn = document.getElementById('vatBtn');
+        btn.textContent = vat ? 'TAK' : 'NIE';
+        btn.classList.toggle('bg-green-600', vat);
+        btn.classList.toggle('bg-gray-300', !vat);
+      } else if (option === 'zus') {
+        zus = !zus;
+        const btn = document.getElementById('zusBtn');
+        btn.textContent = zus ? 'TAK' : 'NIE';
+        btn.classList.toggle('bg-green-600', zus);
+        btn.classList.toggle('bg-gray-300', !zus);
+      }
+      updateSummary();
     }
 
-    docCount.addEventListener('input', () => {
-      docCountLabel.innerText = docCount.value;
-      calculatePrice();
-    });
+    function updateSummary() {
+      const count = parseInt(document.getElementById('dokumenty').value);
+      document.getElementById('docCount').textContent = count;
 
-    vatToggle.addEventListener('click', () => {
-      isVAT = !isVAT;
-      vatToggle.innerText = isVAT ? 'TAK' : 'NIE';
-      vatToggle.className = `px-4 py-2 rounded-full text-white ${isVAT ? 'bg-green-600' : 'bg-gray-400'}`;
-      calculatePrice();
-    });
+      let price = 100 + (count - 10) * 3;
+      if (count <= 10) price = 100;
+      if (vat) price += 30;
+      if (zus) price += 20;
 
-    zusToggle.addEventListener('click', () => {
-      isZUS = !isZUS;
-      zusToggle.innerText = isZUS ? 'TAK' : 'NIE';
-      zusToggle.className = `px-4 py-2 rounded-full text-white ${isZUS ? 'bg-green-600' : 'bg-gray-400'}`;
-      calculatePrice();
-    });
+      document.getElementById('summary').textContent = price + ' zł';
+    }
 
-    calculatePrice();
+    updateSummary();
   </script>
+
 </body>
 </html>
