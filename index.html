@@ -102,11 +102,12 @@
   <section id="o-nas" class="h-screen flex items-center justify-center px-4 pt-20">
     <div class="max-w-2xl text-center">
       <h1 class="text-4xl font-bold mb-4">Księgowość Tomasz Raniszewski</h1>
-      <p class="text-lg">Zdalne biuro rachunkowe dla jednoosobowych działalności.<br>
-      <span class="text-green-700 font-medium">Prosto, przejrzyście, bez wychodzenia z domu.</span></p>
+      <p class="text-lg">
+        Zdalne biuro rachunkowe dla jednoosobowych działalności.<br />
+        <span class="text-green-700 font-medium">Prosto, przejrzyście, bez wychodzenia z domu.</span>
+      </p>
     </div>
   </section>
-
   <!-- Sekcja: Usługi -->
   <section id="uslugi" class="h-screen flex items-center justify-center px-4 bg-gray-50">
     <div class="max-w-2xl text-center">
@@ -124,107 +125,128 @@
     </div>
   </section>
 
-  <!-- Sekcja: Współpraca -->
+  <!-- Sekcja: Współpraca krok po kroku -->
   <section id="wspolpraca" class="h-screen flex items-center justify-center bg-white px-4">
-    <div class="max-w-6xl grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 w-full" id="kafelki"></div>
+    <div class="max-w-6xl grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 w-full" id="wspolpraca-kafelki"></div>
   </section>
 
   <!-- Sekcja: Cennik -->
-  <section id="cennik" class="h-screen flex items-center justify-center px-4">
+  <section id="cennik" class="h-screen flex items-center justify-center px-4 bg-gray-50">
     <div class="max-w-xl w-full text-center">
       <h2 class="text-3xl font-semibold mb-6">Cennik</h2>
-      <p class="text-sm mb-2">Skorzystaj z kalkulatora — orientacyjna wycena dla Twojej firmy.</p>
-      <form class="bg-white rounded-lg p-4 shadow-md space-y-4 text-left max-w-md mx-auto">
-        <div>
-          <label class="block font-medium">Liczba dokumentów miesięcznie:</label>
-          <input type="number" class="w-full border border-gray-300 rounded px-2 py-1" min="0" />
+      <div class="mb-6 text-left">
+        <label for="dokumenty" class="block font-medium mb-1">📄 Ile dokumentów miesięcznie?</label>
+        <input type="range" id="dokumenty" min="1" max="100" value="10" class="w-full accent-green-600" oninput="updateSummary()" />
+        <div class="text-sm mt-1">Liczba dokumentów: <span id="docCount">10</span></div>
+      </div>
+      <div class="space-y-4 mb-6">
+        <div class="flex items-center justify-between">
+          <span class="font-medium">📟 VAT</span>
+          <button onclick="toggleOption('vat')" id="vatBtn" class="px-4 py-2 rounded-full bg-gray-300 text-white transition-colors">NIE</button>
         </div>
-        <div>
-          <label class="block font-medium">Forma opodatkowania:</label>
-          <select class="w-full border border-gray-300 rounded px-2 py-1">
-            <option>KPiR</option>
-            <option>Ryczałt</option>
-          </select>
+        <div class="flex items-center justify-between">
+          <span class="font-medium">👥 ZUS</span>
+          <button onclick="toggleOption('zus')" id="zusBtn" class="px-4 py-2 rounded-full bg-gray-300 text-white transition-colors">NIE</button>
         </div>
-        <div>
-          <label class="block font-medium">Czy masz pracowników?</label>
-          <select class="w-full border border-gray-300 rounded px-2 py-1">
-            <option>Nie</option>
-            <option>Tak</option>
-          </select>
-        </div>
-        <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Oblicz cenę</button>
-      </form>
+      </div>
+      <div class="text-xl font-semibold">
+        📊 Szacowana opłata miesięczna: <span id="summary">0 zł</span>
+      </div>
+      <p class="text-sm text-gray-600 mt-2">💬 Stawki są orientacyjne — dokładną ofertę ustalimy wspólnie na początku współpracy.</p>
     </div>
   </section>
 
   <!-- Sekcja: Kontakt -->
-  <section id="kontakt" class="h-screen flex items-center justify-center px-4 bg-gray-50">
-    <div class="max-w-xl text-center">
+  <section id="kontakt" class="h-screen flex items-center justify-center px-4 bg-white">
+    <div class="max-w-xl text-center space-y-2">
       <h2 class="text-3xl font-semibold">Kontakt</h2>
       <p class="text-lg">Masz pytania? Skontaktuj się:</p>
-      <p class="text-md mt-2">
-        📧 <a href="mailto:ksiegowosc.tomasz.raniszewski@gmail.com" class="text-green-700 underline">ksiegowosc.tomasz.raniszewski@gmail.com</a><br>
+      <div class="text-md space-y-1">
+        📧 <a href="mailto:ksiegowosc.tomasz.raniszewski@gmail.com" class="text-green-700 underline">ksiegowosc.tomasz.raniszewski@gmail.com</a><br />
         ☎️ <a href="tel:+48512261217" class="text-green-700">+48 512 261 217</a>
-      </p>
+      </div>
     </div>
   </section>
-
   <script>
+    let vat = false;
+    let zus = false;
+
+    function toggleOption(option) {
+      const btn = document.getElementById(option + 'Btn');
+      const active = option === 'vat' ? (vat = !vat) : (zus = !zus);
+      btn.textContent = active ? 'TAK' : 'NIE';
+      btn.classList.toggle('bg-green-600', active);
+      btn.classList.toggle('bg-gray-300', !active);
+      updateSummary();
+    }
+
+    function updateSummary() {
+      const count = parseInt(document.getElementById('dokumenty').value);
+      document.getElementById('docCount').textContent = count;
+      let price = 50 + Math.max(0, (count - 10) * 1);
+      if (vat) price += 25;
+      if (zus) price += 10;
+      document.getElementById('summary').textContent = price + ' zł';
+    }
+
+    updateSummary();
+
+    // Sekcja: Współpraca – kafelki
+    const wspolpraca = document.getElementById('wspolpraca-kafelki');
     const kroki = [
-      ['Wstępna rozmowa', 'Bezpłatnie opowiesz mi o swojej sytuacji.'],
-      ['Poznanie potrzeb', 'Poznam Twoją działalność i potrzeby.'],
-      ['Oferta', 'Dopasowana do Ciebie — spokojnie się zastanowisz.'],
-      ['Umowa', 'Online lub osobiście.'],
-      ['Onboarding', 'Pomagam krok po kroku – konfiguracja i procesy.'],
-      ['Start', 'Księgowość zdalnie i wygodnie.']
+      ['Wstępna rozmowa', 'Bezpłatnie opowiesz mi o swojej sytuacji, a ja odpowiem na Twoje pytania.'],
+      ['Poznanie Twoich potrzeb', 'Zadamy kilka podstawowych pytań, by zrozumieć Twoją działalność i zaproponować najlepsze rozwiązanie.'],
+      ['Propozycja oferty', 'Otrzymujesz ofertę dopasowaną do Ciebie. Masz czas na spokojne zastanowienie — to nadal nic nie kosztuje.'],
+      ['Podpisanie umowy', 'Po akceptacji warunków podpisujemy umowę — online lub osobiście.'],
+      ['Onboarding', 'Pomagam Ci krok po kroku — konfiguracja wfirma, dostęp do KSeF, ustalenie procesów.'],
+      ['Start współpracy', 'Od tego momentu działamy razem — księgowość, kontakt, doradztwo. Wszystko zdalnie i wygodnie.'],
     ];
 
-    const container = document.getElementById('kafelki');
-
     let activeCard = null;
+
     kroki.forEach(([title, desc], i) => {
       const card = document.createElement('div');
-      card.className = 'flip-card bg-white rounded-xl shadow-md cursor-pointer h-64 sm:h-60 md:h-56';
+      card.className = 'flip-card group bg-white rounded-xl shadow-md cursor-pointer h-64 relative overflow-hidden transition-all duration-500';
       card.innerHTML = `
-        <div class="flip-card-inner">
-          <div class="flip-card-front font-bold text-xl">${i + 1}. ${title}</div>
-          <div class="flip-card-back text-gray-800 text-base">${desc}</div>
+        <div class="flip-card-inner absolute inset-0">
+          <div class="flip-card-front absolute inset-0 bg-white flex items-center justify-center font-bold text-xl p-4">
+            ${i + 1}. ${title}
+          </div>
+          <div class="flip-card-back absolute inset-0 bg-green-100 flex items-center justify-center text-base p-4">
+            ${desc}
+          </div>
         </div>`;
       card.addEventListener('click', () => {
         if (activeCard && activeCard !== card) activeCard.classList.remove('flipped');
         card.classList.toggle('flipped');
         activeCard = card.classList.contains('flipped') ? card : null;
       });
-      container.appendChild(card);
+      wspolpraca.appendChild(card);
     });
 
-    // Pokaz efekt flipów tylko raz
-    let triggered = false;
-    const observer = new IntersectionObserver(entries => {
+    // Efekt wejścia do sekcji współpraca
+    let revealed = false;
+    const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        if (entry.isIntersecting && !triggered) {
-          triggered = true;
+        if (entry.isIntersecting && !revealed) {
+          revealed = true;
           setTimeout(() => {
-            [...container.children].forEach((card, i) => {
+            [...wspolpraca.children].forEach((card, index) => {
               setTimeout(() => {
-                card.classList.add('flipped');
-                setTimeout(() => {
-                  card.classList.remove('flipped');
-                  const hint = document.createElement('div');
-                  hint.textContent = 'Kliknij';
-                  hint.className = 'hint-burst';
-                  card.appendChild(hint);
-                  setTimeout(() => hint.remove(), 3000);
-                }, 1500);
-              }, i * 500);
+                card.classList.add('highlight');
+                const hint = document.createElement('div');
+                hint.textContent = 'Kliknij';
+                hint.className = 'absolute bottom-2 right-2 bg-green-600 text-white text-xs px-2 py-1 rounded shadow animate-pulse';
+                card.appendChild(hint);
+                setTimeout(() => hint.remove(), 3000);
+              }, index * 400);
             });
-          }, 3000);
+          }, 2000);
         }
       });
-    }, { threshold: 0.8 });
+    }, { threshold: 0.5 });
+
     observer.observe(document.getElementById('wspolpraca'));
   </script>
-
 </body>
 </html>
