@@ -20,130 +20,211 @@
     .flip-card {
       perspective: 1000px;
       position: relative;
-      overflow: hidden;
-      display: flex;
-      align-items: stretch;
+      transition: all 0.3s ease;
     }
     .flip-card-inner {
-      transition: transform 0.6s;
+      transition: transform 0.6s ease;
       transform-style: preserve-3d;
-      position: relative;
       width: 100%;
       height: 100%;
+      position: relative;
     }
-    .flip-card.flipped .flip-card-inner {
+    .flipped .flip-card-inner {
       transform: rotateY(180deg);
     }
-    .flip-card-front, .flip-card-back {
+    .flip-card-front,
+    .flip-card-back {
       backface-visibility: hidden;
       position: absolute;
-      inset: 0;
+      width: 100%;
+      height: 100%;
+      padding: 1rem;
+      border-radius: 1rem;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 1rem;
       text-align: center;
+    }
+    .flip-card-front {
+      background-color: white;
     }
     .flip-card-back {
       transform: rotateY(180deg);
       background-color: #d1fae5;
     }
-    .highlight {
-      animation: pulse 1.5s ease-out 1;
-      box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.5);
-    }
-    @keyframes pulse {
-      0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
-      100% { box-shadow: 0 0 0 10px rgba(34, 197, 94, 0); }
-    }
-    .hint-glow {
+    .hint-burst {
       position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      pointer-events: none;
-      z-index: 10;
-      animation: glow-fade 3s ease-out forwards;
-    }
-    .hint-glow span {
-      background: radial-gradient(circle, rgba(34,197,94,0.8) 0%, rgba(34,197,94,0.4) 60%, transparent 80%);
-      padding: 1rem 2rem;
-      border-radius: 9999px;
-      font-size: 1rem;
-      font-weight: bold;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 0.3rem 0.6rem;
+      background: radial-gradient(circle, #34d399 0%, #059669 100%);
       color: white;
-      text-shadow: 0 0 5px rgba(0,0,0,0.3);
-      opacity: 0;
-      animation: appear-fade 0.5s ease-out forwards;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: bold;
+      animation: burst 1.5s ease-out forwards;
+      pointer-events: none;
     }
-    @keyframes appear-fade {
-      to { opacity: 1; }
-    }
-    @keyframes glow-fade {
-      0% { opacity: 1; transform: scale(1); }
-      100% { opacity: 0; transform: scale(1.4); }
+    @keyframes burst {
+      0% {
+        transform: translate(-50%, -50%) scale(0.6);
+        opacity: 0.2;
+      }
+      60% {
+        transform: translate(-50%, -50%) scale(1.1);
+        opacity: 1;
+      }
+      100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.9;
+      }
     }
   </style>
 </head>
 <body class="bg-white text-gray-800">
 
-<!-- ... pozostała treść bez zmian ... -->
+  <!-- Nawigacja -->
+  <header class="fixed top-0 w-full bg-white shadow-md z-50">
+    <nav class="max-w-5xl mx-auto px-4 py-3 flex justify-between items-center">
+      <div class="font-bold text-lg text-green-700">Księgowość Tomasz Raniszewski</div>
+      <div class="space-x-4">
+        <a href="#o-nas" class="text-gray-700 hover:text-green-600">O nas</a>
+        <a href="#uslugi" class="text-gray-700 hover:text-green-600">Usługi</a>
+        <a href="#wspolpraca" class="text-gray-700 hover:text-green-600">Współpraca</a>
+        <a href="#cennik" class="text-gray-700 hover:text-green-600">Cennik</a>
+        <a href="#kontakt" class="text-gray-700 hover:text-green-600">Kontakt</a>
+      </div>
+    </nav>
+  </header>
 
-<script>
-  // ... poprzedni kod toggleOption i updateSummary ...
+  <!-- Sekcja: O nas -->
+  <section id="o-nas" class="h-screen flex items-center justify-center px-4 pt-20">
+    <div class="max-w-2xl text-center">
+      <h1 class="text-4xl font-bold mb-4">Księgowość Tomasz Raniszewski</h1>
+      <p class="text-lg">Zdalne biuro rachunkowe dla jednoosobowych działalności.<br>
+      <span class="text-green-700 font-medium">Prosto, przejrzyście, bez wychodzenia z domu.</span></p>
+    </div>
+  </section>
 
-  const wspolpraca = document.querySelector('#wspolpraca .grid');
-  const kroki = [
-    ['Wstępna rozmowa', 'Bezpłatnie opowiesz mi o swojej sytuacji, a ja odpowiem na Twoje pytania.'],
-    ['Poznanie Twoich potrzeb', 'Zadamy kilka podstawowych pytań, by zrozumieć Twoją działalność i zaproponować najlepsze rozwiązanie.'],
-    ['Propozycja oferty', 'Otrzymujesz ofertę dopasowaną do Ciebie. Masz czas na spokojne zastanowienie — to nadal nic nie kosztuje.'],
-    ['Podpisanie umowy', 'Po akceptacji warunków podpisujemy umowę — online lub osobiście.'],
-    ['Onboarding', 'Pomagam Ci krok po kroku — konfiguracja wfirma, dostęp do KSeF, ustalenie procesów.'],
-    ['Start współpracy', 'Od tego momentu działamy razem — księgowość, kontakt, doradztwo. Wszystko zdalnie i wygodnie.'],
-  ];
+  <!-- Sekcja: Usługi -->
+  <section id="uslugi" class="h-screen flex items-center justify-center px-4 bg-gray-50">
+    <div class="max-w-2xl text-center">
+      <h2 class="text-3xl font-semibold mb-4">Nasze Usługi</h2>
+      <ul class="text-lg space-y-2 text-left mx-auto max-w-lg">
+        <li>✔️ Kompleksowa obsługa księgowa mikrofirm (KPiR, ryczałt)</li>
+        <li>✔️ Rozliczenia ZUS i JPK_V7</li>
+        <li>✔️ Obsługa dokumentów z KSeF i integracja z wfirma.pl</li>
+        <li>✔️ Automatyzacja procesów księgowych i poboru danych</li>
+        <li>✔️ Kontakt i konsultacje: e-mail, telefon</li>
+        <li>✔️ Nowoczesny panel klienta do wystawiania faktur</li>
+        <li>✔️ Bezpieczny dostęp online do dokumentów i zestawień</li>
+        <li>✔️ Wsparcie zdalne przy wdrażaniu nowych rozwiązań księgowych</li>
+      </ul>
+    </div>
+  </section>
 
-  let activeCard = null;
-  kroki.forEach(([title, desc], i) => {
-    const card = document.createElement('div');
-    card.className = 'flip-card bg-white rounded-xl shadow-md cursor-pointer h-64';
-    card.innerHTML = `
-      <div class="flip-card-inner">
-        <div class="flip-card-front font-bold text-xl">${i + 1}. ${title}</div>
-        <div class="flip-card-back text-gray-800 text-base">${desc}</div>
-      </div>`;
-    card.addEventListener('click', () => {
-      if (activeCard && activeCard !== card) activeCard.classList.remove('flipped');
-      card.classList.toggle('flipped');
-      activeCard = card.classList.contains('flipped') ? card : null;
+  <!-- Sekcja: Współpraca -->
+  <section id="wspolpraca" class="h-screen flex items-center justify-center bg-white px-4">
+    <div class="max-w-6xl grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 w-full" id="kafelki"></div>
+  </section>
+
+  <!-- Sekcja: Cennik -->
+  <section id="cennik" class="h-screen flex items-center justify-center px-4">
+    <div class="max-w-xl w-full text-center">
+      <h2 class="text-3xl font-semibold mb-6">Cennik</h2>
+      <p class="text-sm mb-2">Skorzystaj z kalkulatora — orientacyjna wycena dla Twojej firmy.</p>
+      <form class="bg-white rounded-lg p-4 shadow-md space-y-4 text-left max-w-md mx-auto">
+        <div>
+          <label class="block font-medium">Liczba dokumentów miesięcznie:</label>
+          <input type="number" class="w-full border border-gray-300 rounded px-2 py-1" min="0" />
+        </div>
+        <div>
+          <label class="block font-medium">Forma opodatkowania:</label>
+          <select class="w-full border border-gray-300 rounded px-2 py-1">
+            <option>KPiR</option>
+            <option>Ryczałt</option>
+          </select>
+        </div>
+        <div>
+          <label class="block font-medium">Czy masz pracowników?</label>
+          <select class="w-full border border-gray-300 rounded px-2 py-1">
+            <option>Nie</option>
+            <option>Tak</option>
+          </select>
+        </div>
+        <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Oblicz cenę</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Sekcja: Kontakt -->
+  <section id="kontakt" class="h-screen flex items-center justify-center px-4 bg-gray-50">
+    <div class="max-w-xl text-center">
+      <h2 class="text-3xl font-semibold">Kontakt</h2>
+      <p class="text-lg">Masz pytania? Skontaktuj się:</p>
+      <p class="text-md mt-2">
+        📧 <a href="mailto:ksiegowosc.tomasz.raniszewski@gmail.com" class="text-green-700 underline">ksiegowosc.tomasz.raniszewski@gmail.com</a><br>
+        ☎️ <a href="tel:+48512261217" class="text-green-700">+48 512 261 217</a>
+      </p>
+    </div>
+  </section>
+
+  <script>
+    const kroki = [
+      ['Wstępna rozmowa', 'Bezpłatnie opowiesz mi o swojej sytuacji.'],
+      ['Poznanie potrzeb', 'Poznam Twoją działalność i potrzeby.'],
+      ['Oferta', 'Dopasowana do Ciebie — spokojnie się zastanowisz.'],
+      ['Umowa', 'Online lub osobiście.'],
+      ['Onboarding', 'Pomagam krok po kroku – konfiguracja i procesy.'],
+      ['Start', 'Księgowość zdalnie i wygodnie.']
+    ];
+
+    const container = document.getElementById('kafelki');
+
+    let activeCard = null;
+    kroki.forEach(([title, desc], i) => {
+      const card = document.createElement('div');
+      card.className = 'flip-card bg-white rounded-xl shadow-md cursor-pointer h-64 sm:h-60 md:h-56';
+      card.innerHTML = `
+        <div class="flip-card-inner">
+          <div class="flip-card-front font-bold text-xl">${i + 1}. ${title}</div>
+          <div class="flip-card-back text-gray-800 text-base">${desc}</div>
+        </div>`;
+      card.addEventListener('click', () => {
+        if (activeCard && activeCard !== card) activeCard.classList.remove('flipped');
+        card.classList.toggle('flipped');
+        activeCard = card.classList.contains('flipped') ? card : null;
+      });
+      container.appendChild(card);
     });
-    wspolpraca.appendChild(card);
-  });
 
-  let revealed = false;
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting && !revealed) {
-        revealed = true;
-        setTimeout(() => {
-          [...wspolpraca.children].forEach((card, index) => {
-            setTimeout(() => {
-              card.classList.add('flipped', 'highlight');
+    // Pokaz efekt flipów tylko raz
+    let triggered = false;
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !triggered) {
+          triggered = true;
+          setTimeout(() => {
+            [...container.children].forEach((card, i) => {
               setTimeout(() => {
-                card.classList.remove('flipped', 'highlight');
-                const glow = document.createElement('div');
-                glow.className = 'hint-glow';
-                glow.innerHTML = '<span>Kliknij</span>';
-                card.appendChild(glow);
-                setTimeout(() => glow.remove(), 3000);
-              }, 1500);
-            }, index * 500);
-          });
-        }, 3000);
-      }
-    });
-  }, { threshold: 0.6 });
-  observer.observe(document.querySelector('#wspolpraca'));
-</script>
+                card.classList.add('flipped');
+                setTimeout(() => {
+                  card.classList.remove('flipped');
+                  const hint = document.createElement('div');
+                  hint.textContent = 'Kliknij';
+                  hint.className = 'hint-burst';
+                  card.appendChild(hint);
+                  setTimeout(() => hint.remove(), 3000);
+                }, 1500);
+              }, i * 500);
+            });
+          }, 3000);
+        }
+      });
+    }, { threshold: 0.8 });
+    observer.observe(document.getElementById('wspolpraca'));
+  </script>
+
 </body>
 </html>
