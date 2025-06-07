@@ -9,12 +9,10 @@
     html {
       scroll-behavior: smooth;
     }
-
     .flip-card {
       perspective: 1000px;
       position: relative;
     }
-
     .flip-inner {
       transition: transform 0.6s;
       transform-style: preserve-3d;
@@ -22,57 +20,59 @@
       width: 100%;
       height: 100%;
     }
-
     .flipped .flip-inner {
       transform: rotateY(180deg);
     }
-
     .flip-front, .flip-back {
       backface-visibility: hidden;
       position: absolute;
       width: 100%;
       height: 100%;
-      padding: 1.5rem;
-      border-radius: 0.5rem;
+      padding: 2rem;
+      border-radius: 1rem;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     }
-
     .flip-front {
       background-color: white;
       display: flex;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
+      font-weight: 600;
+      font-size: 1.25rem;
+      text-align: center;
     }
-
     .flip-back {
       background-color: #f0fdf4;
       transform: rotateY(180deg);
-      font-size: 0.95rem;
-      line-height: 1.4;
+      font-size: 1rem;
+      line-height: 1.5;
       color: #1f2937;
       display: flex;
       justify-content: center;
       align-items: center;
       text-align: left;
     }
-
-    .hint-dot {
-      position: absolute;
-      top: 0.75rem;
-      right: 0.75rem;
-      width: 10px;
-      height: 10px;
-      background-color: #16a34a;
-      border-radius: 9999px;
-      box-shadow: 0 0 10px #16a34a;
-      animation: ping 1s infinite;
+    .highlighted {
+      outline: 3px solid #22c55e;
+      outline-offset: -3px;
+      position: relative;
     }
-
-    @keyframes ping {
-      0% { transform: scale(1); opacity: 1; }
-      75% { transform: scale(1.5); opacity: 0; }
-      100% { transform: scale(1.5); opacity: 0; }
+    .highlighted::after {
+      content: 'Kliknij';
+      position: absolute;
+      top: -1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #22c55e;
+      color: white;
+      padding: 0.2rem 0.5rem;
+      font-size: 0.75rem;
+      border-radius: 0.25rem;
+      animation: fadeOut 4s forwards;
+    }
+    @keyframes fadeOut {
+      0% { opacity: 1; }
+      100% { opacity: 0; display: none; }
     }
   </style>
 </head>
@@ -93,87 +93,50 @@
   </header>
 
   <!-- Współpraca krok po kroku -->
-  <section id="wspolpraca" class="min-h-screen flex items-center justify-center px-4 pt-24 pb-16 bg-gray-50">
-    <div class="max-w-6xl w-full">
+  <section id="wspolpraca" class="min-h-screen pt-28 pb-16 px-4 bg-gray-50">
+    <div class="max-w-6xl mx-auto">
       <h2 class="text-3xl font-bold text-center mb-10">Współpraca krok po kroku</h2>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
-        <!-- Kafelek -->
         <div class="flip-card" data-kafelek>
           <div class="flip-inner">
-            <div class="flip-front relative">
-              <span class="text-2xl mb-2">📞</span>
-              <p class="font-semibold">Pierwszy kontakt</p>
-              <div class="hint-dot" id="hint-dot"></div>
-            </div>
-            <div class="flip-back">
-              Rozmawiamy telefonicznie lub przez komunikator wideo – w dogodnym terminie. To swobodna, wstępna rozmowa bez zobowiązań.
-            </div>
+            <div class="flip-front">Pierwszy kontakt</div>
+            <div class="flip-back">Rozmawiamy telefonicznie lub przez komunikator wideo – w dogodnym terminie. To swobodna, wstępna rozmowa bez zobowiązań.</div>
           </div>
         </div>
 
         <div class="flip-card" data-kafelek>
           <div class="flip-inner">
-            <div class="flip-front">
-              <span class="text-2xl mb-2">💬</span>
-              <p class="font-semibold">Poznaję Twoje potrzeby</p>
-            </div>
-            <div class="flip-back">
-              Pytam o kilka podstawowych kwestii, aby zrozumieć, jak działasz i co będzie Ci potrzebne.<br />
-              Przykładowe pytania:<br />
-              • Forma opodatkowania<br />
-              • VAT / ZUS<br />
-              • Ilość dokumentów<br />
-              • Z jakiego systemu korzystasz
-            </div>
+            <div class="flip-front">Poznaję Twoje potrzeby</div>
+            <div class="flip-back">Pytam o kilka podstawowych kwestii, aby zrozumieć, jak działasz i co będzie Ci potrzebne. Przykładowe pytania: • forma opodatkowania • VAT / ZUS • ilość dokumentów • z jakiego systemu korzystasz</div>
           </div>
         </div>
 
         <div class="flip-card" data-kafelek>
           <div class="flip-inner">
-            <div class="flip-front">
-              <span class="text-2xl mb-2">📄</span>
-              <p class="font-semibold">Propozycja współpracy</p>
-            </div>
-            <div class="flip-back">
-              Na podstawie rozmowy przygotowuję ofertę cenową, którą otrzymujesz SMS-em, mailem lub podczas rozmowy. Masz czas, by spokojnie się zastanowić – to nadal rozmowa niezobowiązująca i bezpłatna.
-            </div>
+            <div class="flip-front">Propozycja współpracy</div>
+            <div class="flip-back">Na podstawie rozmowy przygotowuję ofertę cenową. Masz czas, by spokojnie się zastanowić – to nadal rozmowa niezobowiązująca i bezpłatna.</div>
           </div>
         </div>
 
         <div class="flip-card" data-kafelek>
           <div class="flip-inner">
-            <div class="flip-front">
-              <span class="text-2xl mb-2">🖊️</span>
-              <p class="font-semibold">Podpisanie umowy</p>
-            </div>
-            <div class="flip-back">
-              Jeśli zdecydujesz się na współpracę, podpisujemy umowę – wygodnie, zdalnie. Akceptuję podpis elektroniczny, podpis z e-dowodu lub przesłany skan.
-            </div>
+            <div class="flip-front">Podpisanie umowy</div>
+            <div class="flip-back">Jeśli zdecydujesz się na współpracę, podpisujemy umowę – wygodnie, zdalnie. Akceptuję podpis elektroniczny, e-dowód lub przesłany skan.</div>
           </div>
         </div>
 
         <div class="flip-card" data-kafelek>
           <div class="flip-inner">
-            <div class="flip-front">
-              <span class="text-2xl mb-2">✅</span>
-              <p class="font-semibold">Formalności i upoważnienia</p>
-            </div>
-            <div class="flip-back">
-              Pomagam w przygotowaniu niezbędnych dokumentów – ZUS, US, CEIDG. Otrzymujesz ode mnie gotowe pliki i jasne instrukcje. Wszystko załatwiamy bez wychodzenia z domu.
-            </div>
+            <div class="flip-front">Formalności i upoważnienia</div>
+            <div class="flip-back">Pomagam w przygotowaniu dokumentów – ZUS, US, CEIDG. Otrzymujesz ode mnie gotowe pliki i jasne instrukcje. Wszystko załatwiamy zdalnie.</div>
           </div>
         </div>
 
         <div class="flip-card" data-kafelek>
           <div class="flip-inner">
-            <div class="flip-front">
-              <span class="text-2xl mb-2">🤝</span>
-              <p class="font-semibold">Wsparcie i współpraca zdalna</p>
-            </div>
-            <div class="flip-back">
-              Pomagam Ci w pierwszych krokach z wfirma.pl – wspólnie się logujemy, pokazuję jak wystawiać faktury, jak działamy razem. Wszystko po to, by zdalna współpraca była tak prosta, jak to tylko możliwe.
-            </div>
+            <div class="flip-front">Wsparcie i współpraca zdalna</div>
+            <div class="flip-back">Pomagam Ci w pierwszych krokach z wfirma.pl, pokazuję jak wystawiać faktury i jak działamy razem. Wszystko po to, by współpraca była tak prosta, jak to tylko możliwe.</div>
           </div>
         </div>
 
@@ -181,31 +144,31 @@
     </div>
   </section>
 
-  <!-- Skrypt do flip i hint -->
   <script>
-    // Obsługa flip na click (mobile) i zamykanie innych
-    document.querySelectorAll("[data-kafelek]").forEach((card) => {
+    const cards = document.querySelectorAll("[data-kafelek]");
+    let firstRun = true;
+
+    cards.forEach((card, index) => {
       card.addEventListener("click", () => {
-        document.querySelectorAll("[data-kafelek]").forEach((c) => {
-          if (c !== card) c.classList.remove("flipped");
-        });
-        card.classList.toggle("flipped");
+        cards.forEach(c => c.classList.remove("flipped"));
+        card.classList.add("flipped");
       });
     });
 
-    // Hint + auto flip 1 kafelka
     window.addEventListener("DOMContentLoaded", () => {
-      const firstCard = document.querySelector("[data-kafelek]");
-      const dot = document.getElementById("hint-dot");
-
-      setTimeout(() => {
-        dot?.remove();
-        firstCard.classList.add("flipped");
-      }, 1000);
-
-      setTimeout(() => {
-        firstCard.classList.remove("flipped");
-      }, 5000);
+      if (firstRun) {
+        cards.forEach((card, index) => {
+          setTimeout(() => {
+            card.classList.add("highlighted");
+            card.classList.add("flipped");
+            setTimeout(() => {
+              card.classList.remove("flipped");
+              card.classList.remove("highlighted");
+            }, 3000);
+          }, index * 700);
+        });
+        firstRun = false;
+      }
     });
   </script>
 
