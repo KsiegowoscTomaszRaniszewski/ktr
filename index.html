@@ -20,65 +20,38 @@
     .flip-card {
       perspective: 1000px;
       position: relative;
-      transition: all 0.3s ease;
     }
     .flip-card-inner {
-      transition: transform 0.6s ease;
+      transition: transform 0.6s;
       transform-style: preserve-3d;
+      position: relative;
       width: 100%;
       height: 100%;
-      position: relative;
     }
-    .flipped .flip-card-inner {
+    .flip-card.flipped .flip-card-inner {
       transform: rotateY(180deg);
     }
-    .flip-card-front,
-    .flip-card-back {
+    .flip-card-front, .flip-card-back {
       backface-visibility: hidden;
-      position: absolute;
       width: 100%;
       height: 100%;
-      padding: 1rem;
-      border-radius: 1rem;
       display: flex;
       align-items: center;
       justify-content: center;
+      padding: 1rem;
       text-align: center;
-    }
-    .flip-card-front {
-      background-color: white;
     }
     .flip-card-back {
       transform: rotateY(180deg);
       background-color: #d1fae5;
     }
-    .hint-burst {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      padding: 0.3rem 0.6rem;
-      background: radial-gradient(circle, #34d399 0%, #059669 100%);
-      color: white;
-      border-radius: 9999px;
-      font-size: 0.75rem;
-      font-weight: bold;
-      animation: burst 1.5s ease-out forwards;
-      pointer-events: none;
+    .highlight {
+      animation: pulse 1.5s ease-out 1;
+      box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.5);
     }
-    @keyframes burst {
-      0% {
-        transform: translate(-50%, -50%) scale(0.6);
-        opacity: 0.2;
-      }
-      60% {
-        transform: translate(-50%, -50%) scale(1.1);
-        opacity: 1;
-      }
-      100% {
-        transform: translate(-50%, -50%) scale(1);
-        opacity: 0.9;
-      }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+      100% { box-shadow: 0 0 0 10px rgba(34, 197, 94, 0); }
     }
   </style>
 </head>
@@ -108,6 +81,7 @@
       </p>
     </div>
   </section>
+
   <!-- Sekcja: Usługi -->
   <section id="uslugi" class="h-screen flex items-center justify-center px-4 bg-gray-50">
     <div class="max-w-2xl text-center">
@@ -126,12 +100,12 @@
   </section>
 
   <!-- Sekcja: Współpraca krok po kroku -->
-  <section id="wspolpraca" class="h-screen flex items-center justify-center bg-white px-4">
-    <div class="max-w-6xl grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 w-full" id="wspolpraca-kafelki"></div>
+  <section id="wspolpraca" class="flex items-center justify-center bg-white px-4 py-16">
+    <div class="max-w-6xl grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4 md:grid-cols-3 w-full" id="wspolpraca-kafelki"></div>
   </section>
 
   <!-- Sekcja: Cennik -->
-  <section id="cennik" class="h-screen flex items-center justify-center px-4 bg-gray-50">
+  <section id="cennik" class="h-screen flex items-center justify-center px-4">
     <div class="max-w-xl w-full text-center">
       <h2 class="text-3xl font-semibold mb-6">Cennik</h2>
       <div class="mb-6 text-left">
@@ -141,7 +115,7 @@
       </div>
       <div class="space-y-4 mb-6">
         <div class="flex items-center justify-between">
-          <span class="font-medium">📟 VAT</span>
+          <span class="font-medium">💿 VAT</span>
           <button onclick="toggleOption('vat')" id="vatBtn" class="px-4 py-2 rounded-full bg-gray-300 text-white transition-colors">NIE</button>
         </div>
         <div class="flex items-center justify-between">
@@ -157,7 +131,7 @@
   </section>
 
   <!-- Sekcja: Kontakt -->
-  <section id="kontakt" class="h-screen flex items-center justify-center px-4 bg-white">
+  <section id="kontakt" class="h-screen flex items-center justify-center px-4 bg-gray-50">
     <div class="max-w-xl text-center space-y-2">
       <h2 class="text-3xl font-semibold">Kontakt</h2>
       <p class="text-lg">Masz pytania? Skontaktuj się:</p>
@@ -167,19 +141,18 @@
       </div>
     </div>
   </section>
+
   <script>
     let vat = false;
     let zus = false;
-
     function toggleOption(option) {
       const btn = document.getElementById(option + 'Btn');
-      const active = option === 'vat' ? (vat = !vat) : (zus = !zus);
+      const active = option === 'vat' ? vat = !vat : zus = !zus;
       btn.textContent = active ? 'TAK' : 'NIE';
       btn.classList.toggle('bg-green-600', active);
       btn.classList.toggle('bg-gray-300', !active);
       updateSummary();
     }
-
     function updateSummary() {
       const count = parseInt(document.getElementById('dokumenty').value);
       document.getElementById('docCount').textContent = count;
@@ -188,11 +161,9 @@
       if (zus) price += 10;
       document.getElementById('summary').textContent = price + ' zł';
     }
-
     updateSummary();
 
-    // Sekcja: Współpraca – kafelki
-    const wspolpraca = document.getElementById('wspolpraca-kafelki');
+    const wspolpraca = document.querySelector('#wspolpraca-kafelki');
     const kroki = [
       ['Wstępna rozmowa', 'Bezpłatnie opowiesz mi o swojej sytuacji, a ja odpowiem na Twoje pytania.'],
       ['Poznanie Twoich potrzeb', 'Zadamy kilka podstawowych pytań, by zrozumieć Twoją działalność i zaproponować najlepsze rozwiązanie.'],
@@ -201,20 +172,14 @@
       ['Onboarding', 'Pomagam Ci krok po kroku — konfiguracja wfirma, dostęp do KSeF, ustalenie procesów.'],
       ['Start współpracy', 'Od tego momentu działamy razem — księgowość, kontakt, doradztwo. Wszystko zdalnie i wygodnie.'],
     ];
-
     let activeCard = null;
-
     kroki.forEach(([title, desc], i) => {
       const card = document.createElement('div');
-      card.className = 'flip-card group bg-white rounded-xl shadow-md cursor-pointer h-64 relative overflow-hidden transition-all duration-500';
+      card.className = 'flip-card group bg-white rounded-xl shadow-md cursor-pointer h-48 sm:h-56 md:h-64 relative overflow-hidden transition-all duration-500';
       card.innerHTML = `
-        <div class="flip-card-inner absolute inset-0">
-          <div class="flip-card-front absolute inset-0 bg-white flex items-center justify-center font-bold text-xl p-4">
-            ${i + 1}. ${title}
-          </div>
-          <div class="flip-card-back absolute inset-0 bg-green-100 flex items-center justify-center text-base p-4">
-            ${desc}
-          </div>
+        <div class="flip-card-inner">
+          <div class="flip-card-front font-bold text-xl">${i + 1}. ${title}</div>
+          <div class="flip-card-back text-gray-800 text-base">${desc}</div>
         </div>`;
       card.addEventListener('click', () => {
         if (activeCard && activeCard !== card) activeCard.classList.remove('flipped');
@@ -224,7 +189,6 @@
       wspolpraca.appendChild(card);
     });
 
-    // Efekt wejścia do sekcji współpraca
     let revealed = false;
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -233,20 +197,17 @@
           setTimeout(() => {
             [...wspolpraca.children].forEach((card, index) => {
               setTimeout(() => {
-                card.classList.add('highlight');
-                const hint = document.createElement('div');
-                hint.textContent = 'Kliknij';
-                hint.className = 'absolute bottom-2 right-2 bg-green-600 text-white text-xs px-2 py-1 rounded shadow animate-pulse';
-                card.appendChild(hint);
-                setTimeout(() => hint.remove(), 3000);
-              }, index * 400);
+                card.classList.add('flipped', 'highlight');
+                setTimeout(() => {
+                  card.classList.remove('flipped', 'highlight');
+                }, 1500);
+              }, index * 500);
             });
-          }, 2000);
+          }, 3000);
         }
       });
-    }, { threshold: 0.5 });
-
-    observer.observe(document.getElementById('wspolpraca'));
+    }, { threshold: 0.6 });
+    observer.observe(document.querySelector('#wspolpraca'));
   </script>
 </body>
 </html>
