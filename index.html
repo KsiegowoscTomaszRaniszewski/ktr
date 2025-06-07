@@ -30,18 +30,21 @@
   </header>
 
   <!-- Sekcja: O nas -->
-  <section id="o-nas" class="min-h-screen flex items-center justify-center px-4 pt-20">
+  <section id="o-nas" class="h-screen flex items-center justify-center px-4 pt-20">
     <div class="max-w-2xl text-center">
       <h1 class="text-4xl font-bold mb-4">Księgowość Tomasz Raniszewski</h1>
-      <p class="text-lg">Zdalne biuro rachunkowe dla jednoosobowych działalności. Prosto, przejrzyście, bez wychodzenia z domu.</p>
+      <p class="text-lg">
+        Zdalne biuro rachunkowe dla jednoosobowych działalności.<br />
+        <span class="text-green-700 font-medium">Prosto, przejrzyście, bez wychodzenia z domu.</span>
+      </p>
     </div>
   </section>
 
   <!-- Sekcja: Usługi -->
-  <section id="uslugi" class="min-h-screen flex items-center justify-center px-4 pt-20 bg-gray-50">
+  <section id="uslugi" class="h-screen flex items-center justify-center px-4 bg-gray-50">
     <div class="max-w-2xl text-center">
       <h2 class="text-3xl font-semibold mb-4">Nasze Usługi</h2>
-      <ul class="text-lg space-y-2 text-left">
+      <ul class="text-lg space-y-2 text-left mx-auto max-w-lg">
         <li>✔️ Kompleksowa obsługa księgowa mikrofirm (KPiR, ryczałt)</li>
         <li>✔️ Rozliczenia ZUS i JPK_V7</li>
         <li>✔️ Obsługa dokumentów z KSeF i integracja z wfirma.pl</li>
@@ -55,47 +58,41 @@
   </section>
 
   <!-- Sekcja: Cennik -->
-  <section id="cennik" class="min-h-screen flex items-center justify-center px-4 pt-20">
+  <section id="cennik" class="h-screen flex items-center justify-center px-4">
     <div class="max-w-xl w-full text-center">
       <h2 class="text-3xl font-semibold mb-6">Cennik</h2>
 
-      <div class="mb-4 text-left">
+      <div class="mb-6 text-left">
         <label for="dokumenty" class="block font-medium mb-1">📄 Ile dokumentów miesięcznie?</label>
-        <input type="range" id="dokumenty" min="1" max="100" value="10"
-               class="w-full accent-green-600" oninput="updateSummary()" />
+        <input type="range" id="dokumenty" min="1" max="100" value="10" class="w-full accent-green-600" oninput="updateSummary()" />
         <div class="text-sm mt-1">Liczba dokumentów: <span id="docCount">10</span></div>
       </div>
 
-      <div class="mb-4 text-left">
-        <span class="font-medium">🧾 VAT</span>
-        <button onclick="toggleOption('vat')" id="vatBtn"
-                class="ml-4 px-4 py-2 rounded-full bg-gray-300 text-white transition-colors">
-          NIE
-        </button>
-      </div>
-
-      <div class="mb-6 text-left">
-        <span class="font-medium">👥 ZUS</span>
-        <button onclick="toggleOption('zus')" id="zusBtn"
-                class="ml-4 px-4 py-2 rounded-full bg-gray-300 text-white transition-colors">
-          NIE
-        </button>
+      <div class="space-y-4 mb-6">
+        <div class="flex items-center justify-between">
+          <span class="font-medium">🧾 VAT</span>
+          <button onclick="toggleOption('vat')" id="vatBtn" class="px-4 py-2 rounded-full bg-gray-300 text-white transition-colors">NIE</button>
+        </div>
+        <div class="flex items-center justify-between">
+          <span class="font-medium">👥 ZUS</span>
+          <button onclick="toggleOption('zus')" id="zusBtn" class="px-4 py-2 rounded-full bg-gray-300 text-white transition-colors">NIE</button>
+        </div>
       </div>
 
       <div class="text-xl font-semibold">
         📊 Szacowana opłata miesięczna: <span id="summary">0 zł</span>
       </div>
+      <p class="text-sm text-gray-600 mt-2">💬 Stawki są orientacyjne — dokładną ofertę ustalimy wspólnie na początku współpracy.</p>
     </div>
   </section>
 
   <!-- Sekcja: Kontakt -->
-  <section id="kontakt" class="min-h-screen flex items-center justify-center px-4 pt-20 bg-gray-50">
-    <div class="max-w-xl text-center space-y-4">
+  <section id="kontakt" class="h-screen flex items-center justify-center px-4 bg-gray-50">
+    <div class="max-w-xl text-center space-y-2">
       <h2 class="text-3xl font-semibold">Kontakt</h2>
       <p class="text-lg">Masz pytania? Skontaktuj się:</p>
-      <div class="text-md">
-        📧 <a href="mailto:ksiegowosc.tomasz.raniszewski@gmail.com"
-              class="text-green-700 underline">ksiegowosc.tomasz.raniszewski@gmail.com</a><br />
+      <div class="text-md space-y-1">
+        📧 <a href="mailto:ksiegowosc.tomasz.raniszewski@gmail.com" class="text-green-700 underline">ksiegowosc.tomasz.raniszewski@gmail.com</a><br />
         ☎️ <a href="tel:+48512261217" class="text-green-700">+48 512 261 217</a>
       </div>
     </div>
