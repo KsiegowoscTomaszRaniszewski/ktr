@@ -84,22 +84,18 @@
 
   <!-- Sekcja: Współpraca krok po kroku -->
   <section id="wspolpraca" class="h-screen flex items-center justify-center bg-white px-4">
-    <div class="max-w-6xl grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full">
-      <!-- Kafelki zostaną wstawione dynamicznie przez JS -->
-    </div>
+    <div class="max-w-6xl grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full"></div>
   </section>
 
   <!-- Sekcja: Cennik -->
   <section id="cennik" class="h-screen flex items-center justify-center px-4">
     <div class="max-w-xl w-full text-center">
       <h2 class="text-3xl font-semibold mb-6">Cennik</h2>
-
       <div class="mb-6 text-left">
         <label for="dokumenty" class="block font-medium mb-1">📄 Ile dokumentów miesięcznie?</label>
         <input type="range" id="dokumenty" min="1" max="100" value="10" class="w-full accent-green-600" oninput="updateSummary()" />
         <div class="text-sm mt-1">Liczba dokumentów: <span id="docCount">10</span></div>
       </div>
-
       <div class="space-y-4 mb-6">
         <div class="flex items-center justify-between">
           <span class="font-medium">🧾 VAT</span>
@@ -110,10 +106,7 @@
           <button onclick="toggleOption('zus')" id="zusBtn" class="px-4 py-2 rounded-full bg-gray-300 text-white transition-colors">NIE</button>
         </div>
       </div>
-
-      <div class="text-xl font-semibold">
-        📊 Szacowana opłata miesięczna: <span id="summary">0 zł</span>
-      </div>
+      <div class="text-xl font-semibold">📊 Szacowana opłata miesięczna: <span id="summary">0 zł</span></div>
       <p class="text-sm text-gray-600 mt-2">💬 Stawki są orientacyjne — dokładną ofertę ustalimy wspólnie na początku współpracy.</p>
     </div>
   </section>
@@ -130,7 +123,6 @@
     </div>
   </section>
 
-  <!-- Skrypt do cennika + współpracy -->
   <script>
     let vat = false;
     let zus = false;
@@ -151,10 +143,8 @@
       document.getElementById('summary').textContent = price + ' zł';
     }
     updateSummary();
-  </script>
 
-  <!-- Skrypt do sekcji współpraca -->
-  <script>
+    // Współpraca - flip efekt z obserwatorem widoczności
     const wspolpraca = document.querySelector('#wspolpraca .grid');
     const kroki = [
       ['Wstępna rozmowa', 'Bezpłatnie opowiesz mi o swojej sytuacji, a ja odpowiem na Twoje pytania.'],
@@ -167,7 +157,7 @@
     let activeCard = null;
     kroki.forEach(([title, desc], i) => {
       const card = document.createElement('div');
-      card.className = 'flip-card bg-white rounded-xl shadow-md cursor-pointer h-64';
+      card.className = 'flip-card bg-white rounded-xl shadow-md cursor-pointer h-64 relative';
       card.innerHTML = `
         <div class="flip-card-inner w-full h-full">
           <div class="flip-card-front absolute inset-0 flex items-center justify-center font-bold text-xl text-center p-4">${i+1}. ${title}</div>
@@ -184,25 +174,28 @@
     let revealed = false;
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        if (entry.isIntersecting && !revealed) {
+        if (entry.isIntersecting && entry.intersectionRatio > 0.8 && !revealed) {
           revealed = true;
           setTimeout(() => {
-            const first = wspolpraca.children[0];
-            first.classList.add('flipped', 'highlight');
-            setTimeout(() => {
-              first.classList.remove('flipped', 'highlight');
-              const hint = document.createElement('div');
-              hint.textContent = 'Kliknij';
-              hint.className = 'absolute text-sm bg-green-600 text-white px-2 py-1 rounded-full mt-2';
-              first.appendChild(hint);
-              setTimeout(() => hint.remove(), 3000);
-            }, 2000);
+            const cards = [...wspolpraca.children];
+            cards.forEach((card, index) => {
+              setTimeout(() => {
+                card.classList.add('flipped', 'highlight');
+                setTimeout(() => {
+                  card.classList.remove('flipped', 'highlight');
+                  const hint = document.createElement('div');
+                  hint.textContent = 'Kliknij';
+                  hint.className = 'absolute text-sm bg-green-600 text-white px-2 py-1 rounded-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2';
+                  card.appendChild(hint);
+                  setTimeout(() => hint.remove(), 3000);
+                }, 1500);
+              }, index * 600);
+            });
           }, 3000);
         }
       });
-    }, { threshold: 0.6 });
+    }, { threshold: 0.8 });
     observer.observe(document.querySelector('#wspolpraca'));
   </script>
-
 </body>
 </html>
