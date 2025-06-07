@@ -9,180 +9,200 @@
     html {
       scroll-behavior: smooth;
     }
+    section {
+      scroll-margin-top: 4rem;
+    }
     .flip-card {
       perspective: 1000px;
-      position: relative;
-      height: 320px;
     }
-    .flip-inner {
+    .flip-card-inner {
       transition: transform 0.6s;
       transform-style: preserve-3d;
-      position: relative;
-      width: 100%;
-      height: 100%;
     }
-    .flipped .flip-inner {
+    .flip-card.flipped .flip-card-inner {
       transform: rotateY(180deg);
     }
-    .flip-front, .flip-back {
+    .flip-card-front, .flip-card-back {
       backface-visibility: hidden;
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      padding: 2rem;
-      border-radius: 1rem;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     }
-    .flip-front {
-      background-color: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-weight: 600;
-      font-size: 1.25rem;
-      text-align: center;
-    }
-    .flip-back {
-      background-color: #f0fdf4;
+    .flip-card-back {
       transform: rotateY(180deg);
-      font-size: 1rem;
-      line-height: 1.5;
-      color: #1f2937;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: left;
     }
-    .highlighted {
-      outline: 3px solid #22c55e;
-      outline-offset: -3px;
-      position: relative;
+    .highlight {
+      animation: pulse 1.5s ease-out 1;
+      box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.5);
     }
-    .highlighted::after {
-      content: 'Kliknij';
-      position: absolute;
-      top: -1.5rem;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #22c55e;
-      color: white;
-      padding: 0.2rem 0.5rem;
-      font-size: 0.75rem;
-      border-radius: 0.25rem;
-      animation: fadeOut 4s forwards;
-    }
-    @keyframes fadeOut {
-      0% { opacity: 1; }
-      100% { opacity: 0; display: none; }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+      100% { box-shadow: 0 0 0 10px rgba(34, 197, 94, 0); }
     }
   </style>
 </head>
 <body class="bg-white text-gray-800">
 
-<!-- Nawigacja -->
-<header class="fixed top-0 w-full bg-white shadow-md z-50">
-  <nav class="max-w-5xl mx-auto px-4 py-3 flex justify-between items-center">
-    <div class="font-bold text-lg text-green-700">Księgowość Tomasz Raniszewski</div>
-    <div class="space-x-4">
-      <a href="#o-nas" class="text-gray-700 hover:text-green-600">O nas</a>
-      <a href="#uslugi" class="text-gray-700 hover:text-green-600">Usługi</a>
-      <a href="#wspolpraca" class="text-gray-700 hover:text-green-600">Współpraca</a>
-      <a href="#cennik" class="text-gray-700 hover:text-green-600">Cennik</a>
-      <a href="#kontakt" class="text-gray-700 hover:text-green-600">Kontakt</a>
+  <!-- Nawigacja -->
+  <header class="fixed top-0 w-full bg-white shadow-md z-50">
+    <nav class="max-w-5xl mx-auto px-4 py-3 flex justify-between items-center">
+      <div class="font-bold text-lg text-green-700">Księgowość Tomasz Raniszewski</div>
+      <div class="space-x-4">
+        <a href="#o-nas" class="text-gray-700 hover:text-green-600">O nas</a>
+        <a href="#uslugi" class="text-gray-700 hover:text-green-600">Usługi</a>
+        <a href="#wspolpraca" class="text-gray-700 hover:text-green-600">Współpraca</a>
+        <a href="#cennik" class="text-gray-700 hover:text-green-600">Cennik</a>
+        <a href="#kontakt" class="text-gray-700 hover:text-green-600">Kontakt</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Sekcja: O nas -->
+  <section id="o-nas" class="h-screen flex items-center justify-center px-4 pt-20">
+    <div class="max-w-2xl text-center">
+      <h1 class="text-4xl font-bold mb-4">Księgowość Tomasz Raniszewski</h1>
+      <p class="text-lg">
+        Zdalne biuro rachunkowe dla jednoosobowych działalności.<br />
+        <span class="text-green-700 font-medium">Prosto, przejrzyście, bez wychodzenia z domu.</span>
+      </p>
     </div>
-  </nav>
-</header>
+  </section>
 
-<!-- Sekcja: O nas -->
-<section id="o-nas" class="h-screen flex items-center justify-center px-4 pt-20">
-  <div class="max-w-2xl text-center">
-    <h1 class="text-4xl font-bold mb-4">Księgowość Tomasz Raniszewski</h1>
-    <p class="text-lg">
-      Zdalne biuro rachunkowe dla jednoosobowych działalności.<br />
-      <span class="text-green-700 font-medium">Prosto, przejrzyście, bez wychodzenia z domu.</span>
-    </p>
-  </div>
-</section>
-
-<!-- Sekcja: Usługi -->
-<section id="uslugi" class="h-screen flex items-center justify-center px-4 bg-gray-50">
-  <div class="max-w-2xl text-center">
-    <h2 class="text-3xl font-semibold mb-4">Nasze Usługi</h2>
-    <ul class="text-lg space-y-2 text-left mx-auto max-w-lg">
-      <li>✔️ Kompleksowa obsługa księgowa mikrofirm (KPiR, ryczałt)</li>
-      <li>✔️ Rozliczenia ZUS i JPK_V7</li>
-      <li>✔️ Obsługa dokumentów z KSeF i integracja z wfirma.pl</li>
-      <li>✔️ Automatyzacja procesów księgowych i poboru danych</li>
-      <li>✔️ Kontakt i konsultacje: e-mail, telefon</li>
-      <li>✔️ Nowoczesny panel klienta do wystawiania faktur</li>
-      <li>✔️ Bezpieczny dostęp online do dokumentów i zestawień</li>
-      <li>✔️ Wsparcie zdalne przy wdrażaniu nowych rozwiązań księgowych</li>
-    </ul>
-  </div>
-</section>
-
-<!-- Sekcja: Współpraca krok po kroku -->
-<section id="wspolpraca" class="min-h-screen pt-28 pb-16 px-4 bg-white">
-  <div class="max-w-6xl mx-auto">
-    <h2 class="text-3xl font-bold text-center mb-10">Współpraca krok po kroku</h2>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="kafelki-container">
-      <!-- Kafelki będą tu dynamicznie dołączone przez JS -->
+  <!-- Sekcja: Usługi -->
+  <section id="uslugi" class="h-screen flex items-center justify-center px-4 bg-gray-50">
+    <div class="max-w-2xl text-center">
+      <h2 class="text-3xl font-semibold mb-4">Nasze Usługi</h2>
+      <ul class="text-lg space-y-2 text-left mx-auto max-w-lg">
+        <li>✔️ Kompleksowa obsługa księgowa mikrofirm (KPiR, ryczałt)</li>
+        <li>✔️ Rozliczenia ZUS i JPK_V7</li>
+        <li>✔️ Obsługa dokumentów z KSeF i integracja z wfirma.pl</li>
+        <li>✔️ Automatyzacja procesów księgowych i poboru danych</li>
+        <li>✔️ Kontakt i konsultacje: e-mail, telefon</li>
+        <li>✔️ Nowoczesny panel klienta do wystawiania faktur</li>
+        <li>✔️ Bezpieczny dostęp online do dokumentów i zestawień</li>
+        <li>✔️ Wsparcie zdalne przy wdrażaniu nowych rozwiązań księgowych</li>
+      </ul>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- Sekcja: Cennik -->
-<section id="cennik" class="h-screen flex items-center justify-center px-4">
-  <div class="max-w-xl w-full text-center">
-    <h2 class="text-3xl font-semibold mb-6">Cennik</h2>
-    <p class="text-lg">Cennik ustalany jest indywidualnie na podstawie ilości dokumentów, rodzaju rozliczeń i formy współpracy.<br />Skontaktuj się, aby otrzymać ofertę dopasowaną do Twojej działalności.</p>
-  </div>
-</section>
-
-<!-- Sekcja: Kontakt -->
-<section id="kontakt" class="h-screen flex items-center justify-center px-4 bg-gray-50">
-  <div class="max-w-xl text-center space-y-2">
-    <h2 class="text-3xl font-semibold">Kontakt</h2>
-    <p class="text-lg">Masz pytania? Skontaktuj się:</p>
-    <div class="text-md space-y-1">
-      📧 <a href="mailto:ksiegowosc.tomasz.raniszewski@gmail.com" class="text-green-700 underline">ksiegowosc.tomasz.raniszewski@gmail.com</a><br />
-      ☎️ <a href="tel:+48512261217" class="text-green-700">+48 512 261 217</a>
+  <!-- Sekcja: Współpraca krok po kroku -->
+  <section id="wspolpraca" class="h-screen flex items-center justify-center bg-white px-4">
+    <div class="max-w-6xl grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full">
+      <!-- Kafelki zostaną wstawione dynamicznie przez JS -->
     </div>
-  </div>
-</section>
+  </section>
 
-<script>
-  const observer = new IntersectionObserver((entries) => {
-    const isVisible = entries.some(entry => entry.isIntersecting);
-    if (isVisible) {
-      startFlipHint();
-      observer.disconnect();
+  <!-- Sekcja: Cennik -->
+  <section id="cennik" class="h-screen flex items-center justify-center px-4">
+    <div class="max-w-xl w-full text-center">
+      <h2 class="text-3xl font-semibold mb-6">Cennik</h2>
+
+      <div class="mb-6 text-left">
+        <label for="dokumenty" class="block font-medium mb-1">📄 Ile dokumentów miesięcznie?</label>
+        <input type="range" id="dokumenty" min="1" max="100" value="10" class="w-full accent-green-600" oninput="updateSummary()" />
+        <div class="text-sm mt-1">Liczba dokumentów: <span id="docCount">10</span></div>
+      </div>
+
+      <div class="space-y-4 mb-6">
+        <div class="flex items-center justify-between">
+          <span class="font-medium">🧾 VAT</span>
+          <button onclick="toggleOption('vat')" id="vatBtn" class="px-4 py-2 rounded-full bg-gray-300 text-white transition-colors">NIE</button>
+        </div>
+        <div class="flex items-center justify-between">
+          <span class="font-medium">👥 ZUS</span>
+          <button onclick="toggleOption('zus')" id="zusBtn" class="px-4 py-2 rounded-full bg-gray-300 text-white transition-colors">NIE</button>
+        </div>
+      </div>
+
+      <div class="text-xl font-semibold">
+        📊 Szacowana opłata miesięczna: <span id="summary">0 zł</span>
+      </div>
+      <p class="text-sm text-gray-600 mt-2">💬 Stawki są orientacyjne — dokładną ofertę ustalimy wspólnie na początku współpracy.</p>
+    </div>
+  </section>
+
+  <!-- Sekcja: Kontakt -->
+  <section id="kontakt" class="h-screen flex items-center justify-center px-4 bg-gray-50">
+    <div class="max-w-xl text-center space-y-2">
+      <h2 class="text-3xl font-semibold">Kontakt</h2>
+      <p class="text-lg">Masz pytania? Skontaktuj się:</p>
+      <div class="text-md space-y-1">
+        📧 <a href="mailto:ksiegowosc.tomasz.raniszewski@gmail.com" class="text-green-700 underline">ksiegowosc.tomasz.raniszewski@gmail.com</a><br />
+        ☎️ <a href="tel:+48512261217" class="text-green-700">+48 512 261 217</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skrypt do cennika + współpracy -->
+  <script>
+    let vat = false;
+    let zus = false;
+    function toggleOption(option) {
+      const btn = document.getElementById(option + 'Btn');
+      const active = option === 'vat' ? vat = !vat : zus = !zus;
+      btn.textContent = active ? 'TAK' : 'NIE';
+      btn.classList.toggle('bg-green-600', active);
+      btn.classList.toggle('bg-gray-300', !active);
+      updateSummary();
     }
-  }, { threshold: 0.5 });
+    function updateSummary() {
+      const count = parseInt(document.getElementById('dokumenty').value);
+      document.getElementById('docCount').textContent = count;
+      let price = 50 + Math.max(0, (count - 10) * 1);
+      if (vat) price += 25;
+      if (zus) price += 10;
+      document.getElementById('summary').textContent = price + ' zł';
+    }
+    updateSummary();
+  </script>
 
-  observer.observe(document.querySelector('#wspolpraca'));
-
-  function startFlipHint() {
-    const cards = document.querySelectorAll("[data-kafelek]");
-    cards.forEach((card, index) => {
-      setTimeout(() => {
-        card.classList.add("highlighted", "flipped");
-        setTimeout(() => {
-          card.classList.remove("flipped", "highlighted");
-        }, 3000);
-      }, index * 700);
-    });
-  }
-
-  document.addEventListener("DOMContentLoaded", () => {
-    document.querySelectorAll("[data-kafelek]").forEach((card) => {
-      card.addEventListener("click", () => {
-        document.querySelectorAll("[data-kafelek]").forEach(c => c.classList.remove("flipped"));
-        card.classList.add("flipped");
+  <!-- Skrypt do sekcji współpraca -->
+  <script>
+    const wspolpraca = document.querySelector('#wspolpraca .grid');
+    const kroki = [
+      ['Wstępna rozmowa', 'Bezpłatnie opowiesz mi o swojej sytuacji, a ja odpowiem na Twoje pytania.'],
+      ['Poznanie Twoich potrzeb', 'Zadamy kilka podstawowych pytań, by zrozumieć Twoją działalność i zaproponować najlepsze rozwiązanie.'],
+      ['Propozycja oferty', 'Otrzymujesz ofertę dopasowaną do Ciebie. Masz czas na spokojne zastanowienie — to nadal nic nie kosztuje.'],
+      ['Podpisanie umowy', 'Po akceptacji warunków podpisujemy umowę — online lub osobiście.'],
+      ['Onboarding', 'Pomagam Ci krok po kroku — konfiguracja wfirma, dostęp do KSeF, ustalenie procesów.'],
+      ['Start współpracy', 'Od tego momentu działamy razem — księgowość, kontakt, doradztwo. Wszystko zdalnie i wygodnie.'],
+    ];
+    let activeCard = null;
+    kroki.forEach(([title, desc], i) => {
+      const card = document.createElement('div');
+      card.className = 'flip-card bg-white rounded-xl shadow-md cursor-pointer h-64';
+      card.innerHTML = `
+        <div class="flip-card-inner w-full h-full">
+          <div class="flip-card-front absolute inset-0 flex items-center justify-center font-bold text-xl text-center p-4">${i+1}. ${title}</div>
+          <div class="flip-card-back absolute inset-0 bg-green-100 flex items-center justify-center text-center p-4 text-gray-800 text-base">${desc}</div>
+        </div>`;
+      card.addEventListener('click', () => {
+        if (activeCard && activeCard !== card) activeCard.classList.remove('flipped');
+        card.classList.toggle('flipped');
+        activeCard = card.classList.contains('flipped') ? card : null;
       });
+      wspolpraca.appendChild(card);
     });
-  });
-</script>
+
+    let revealed = false;
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !revealed) {
+          revealed = true;
+          setTimeout(() => {
+            const first = wspolpraca.children[0];
+            first.classList.add('flipped', 'highlight');
+            setTimeout(() => {
+              first.classList.remove('flipped', 'highlight');
+              const hint = document.createElement('div');
+              hint.textContent = 'Kliknij';
+              hint.className = 'absolute text-sm bg-green-600 text-white px-2 py-1 rounded-full mt-2';
+              first.appendChild(hint);
+              setTimeout(() => hint.remove(), 3000);
+            }, 2000);
+          }, 3000);
+        }
+      });
+    }, { threshold: 0.6 });
+    observer.observe(document.querySelector('#wspolpraca'));
+  </script>
 
 </body>
 </html>
